@@ -1,13 +1,21 @@
 @extends('layouts.app')
 @section('content')
+@section('aksesoris', 'active')
 <div class="content-wrapper">
     <section class="section">
         <div class="card" style="width:100%;">
             <div class="card-body">
-                <h2 class="card-title" style="color: black;">Data Harga</h2>
+                <h2 class="card-title" style="color: black;">Data Barang</h2>
                 <hr>
                 <button class="btn btn-success" data-toggle="modal" data-target="#tambahModal" data-whatever="@mdo">Tambah
-                    Harga ⭢</button>
+                    Barang ⭢</button><br>
+                    @if ($errors->any())
+                    <div class="alert alert-danger" style="max-width: 50%">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                    </div>
+                @endif
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -28,17 +36,25 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Harga</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Barang</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
-        <form method="POST" action="{{route('harga.store')}}">
+        <form method="POST" action="{{route('data_barang.store')}}">
             @csrf
             <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Harga</label>
-            <input type="number" class="form-control" id="recipient-name"  name="harga" required>
+                <label for="recipient-name" class="col-form-label">Nama Barang</label>
+                <input type="text" class="form-control" id="recipient-name"  name="nama_barang">
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Harga Barang</label>
+                <input type="text" class="form-control" id="recipient-name"  name="harga_barang">
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Jenis Barang</label>
+                <input type="text" class="form-control" id="recipient-name"  name="jenis_barang">
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -54,9 +70,9 @@
 
 <div id="result"></div>
 <script>
-    function actionharga(action,id){
+    function action(action,id){
         $.ajax({
-        url:"harga/"+action+"/"+id,
+        url:"data_barang/"+action+"/"+id,
         method:"GET",
             success:function(data){
                 $('#result').html(data.html);

@@ -16,12 +16,12 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $harga = Harga::all()->count();
+        // $harga = Harga::all()->count();
         $operator = Operator::all()->count();
         $pelanggan = Transaksi::all()->count();
 
         return view('layouts.admin.dashboard.dashboard', [
-            'harga' => $harga,
+            // 'harga' => $harga,
             'operator' => $operator,
             'pelanggan' => $pelanggan
         ]);

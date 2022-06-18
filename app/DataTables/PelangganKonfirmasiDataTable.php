@@ -31,7 +31,7 @@ class PelangganKonfirmasiDataTable extends DataTable
                 return $action;
             })
             ->addColumn('id_transaksi_pulsa', function ($data) {
-                return $data->transaksi->user->name . ' | ' . 'Operator' . ' ' .  $data->transaksi->operator->nama_operator . ' | ' . ' Total Harga ' . 'Rp.' .  $data->transaksi->total_harga;
+                return $data->transaksi->nama . ' | ' . 'Operator' . ' ' .  $data->transaksi->operator->nama_operator . ' | ' . ' Total Harga ' . 'Rp.' .  $data->transaksi->total_harga;
             })
             ->addColumn('created_at', function ($data) {
                 return Carbon::parse($data->created_at)->translatedFormat('l, d F Y');

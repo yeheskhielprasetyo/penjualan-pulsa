@@ -14,24 +14,15 @@
                 @method('PUT')
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label">Nama Operator</label>
-                    <input type="text" class="form-control" id="recipient-name"  name="nama_operator" required value="{{$data->nama_operator}}">
+                    <input type="text" class="form-control" id="recipient-name"  name="nama_operator"  value="{{$data->nama_operator}}">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Stock</label>
-                        <input type="number" class="form-control" id="recipient-name"  name="stock" required value="{{$data->stock}}">
+                        <input type="text" class="form-control" id="recipient-name"  name="stock"  value="{{$data->stock}}">
                     </div>
                     <div class="form-group">
-                        <label for="id_pegawai ">Harga</label>
-                        <select class="form-control" id="editharga" name="harga" required  style="color: #8d827f">
-                        <option value="">- Pilih Harga -</option>
-                        @foreach ($harga as $hargas)
-                            @if ($hargas->id == $data->id_harga)
-                            <option selected value="{{$hargas->id}}">{{$hargas->harga}}</option>
-                            @else
-                            <option value="{{$hargas->id}}">{{$hargas->harga}}</option>
-                            @endif
-                        @endforeach
-                        </select>
+                        <label for="recipient-name" class="col-form-label">Harga</label>
+                        <input type="text" class="form-control" id="recipient-name"  name="harga"  value="{{$data->harga}}">
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -45,10 +36,6 @@
 </div>
 
 <script src="{{asset('assets/js/chosen.jquery.min.js')}}"></script>
-<script>
-    $('#editharga').chosen({ width: '100%' });
-</script>
-
 <script>
     $("#modal-editoperator").modal('show');
         $.fn.modal.Constructor.prototype._enforceFocus = function() {

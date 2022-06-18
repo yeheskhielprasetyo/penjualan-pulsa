@@ -26,8 +26,8 @@ class HomeController extends Controller
         return view('layouts.app');
     }
 
-    public function indexadmin()
-    {
-        return view('layouts.app');
-    }
+    // public function indexadmin()
+    // {
+    //     return view('layouts.app');
+    // }
 }

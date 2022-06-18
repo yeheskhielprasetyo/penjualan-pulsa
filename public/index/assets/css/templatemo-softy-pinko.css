@@ -731,7 +731,7 @@ welcome
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    height: 100vh;
+    height: 10vh;
 }
 
 .welcome-area .header-text {
@@ -771,7 +771,7 @@ welcome
     .welcome-area .header-text h1 {
         text-align: center;
         color: #fff;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 
     .welcome-area .header-text h1 span {

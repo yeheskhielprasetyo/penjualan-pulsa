@@ -9,13 +9,21 @@
         </button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{{ route('harga.update', $data->id) }}">
+            <form method="POST" action="{{ route('data_barang.update', $data->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Harga</label>
-                    <input type="number" class="form-control" id="recipient-name"  name="harga" required value="{{$data->harga}}">
-                    </div>
+                    <label for="recipient-name" class="col-form-label">Nama Barang</label>
+                    <input type="text" class="form-control" id="recipient-name"  name="nama_barang" value="{{$data->nama_barang}}">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Harga Barang</label>
+                    <input type="text" class="form-control" id="recipient-name"  name="harga_barang" value="{{$data->harga_barang}}">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Jenis Barang</label>
+                    <input type="text" class="form-control" id="recipient-name"  name="jenis_barang" value="{{$data->jenis_barang}}">
+                </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save</button>

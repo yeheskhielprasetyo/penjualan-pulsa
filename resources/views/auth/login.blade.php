@@ -23,9 +23,9 @@
 							<form method="POST" class="my-login-validation" action="{{ route('login') }}">
                                 @csrf
 								<div class="form-group">
-									<label for="email">E-Mail Address</label>
-									<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-									@error('email')
+									<label for="username">Username</label>
+									<input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}">
+									@error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -35,7 +35,7 @@
 								<div class="form-group">
 									<label for="password">Password
 									</label>
-									<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required data-eye autocomplete="current-password">
+									<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  data-eye autocomplete="current-password">
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -54,11 +54,11 @@
 									<button type="submit" class="btn btn-primary btn-block">
 										Login
 									</button>
-                                    <div class="form-group mt-3">
+                                    {{-- <div class="form-group mt-3">
                                         <p class="text-center"><b>Silahkan klik Register jika tidak memiliki akun</b>
                                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                         </p>
-                                    </div>
+                                    </div> --}}
 								</div>
 							</form>
 						</div>

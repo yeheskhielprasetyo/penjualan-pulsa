@@ -15,11 +15,11 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user');
+            $table->string('nama');
             $table->unsignedBigInteger('id_operator');
             $table->string('jumlah');
             $table->string('no_hp');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->string('total_harga')->nullable();
             $table->foreign('id_operator')->references('id')->on('operators');
             $table->timestamps();
         });

@@ -68,7 +68,6 @@
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-        @if (Auth::user()->roles == "ADMIN")
             <li class="nav-item @yield('dashboard')">
                 <a class="nav-link" href="{{route('dashboard.index')}}">
                 <i class="mdi mdi-subway menu-icon"></i>
@@ -81,26 +80,37 @@
             <span class="menu-title">Operator</span>
             </a>
         </li>
-        <li class="nav-item @yield('dapel')">
-            <a class="nav-link" href="{{route('harga.index')}}">
+        <li class="nav-item @yield('data_barang')">
+            <a class="nav-link" href="{{route('data_barang.index')}}">
             <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Harga</span>
-            </a>
-        </li>
-        <li class="nav-item @yield('dapel')">
-            <a class="nav-link" href="{{route('pelanggan.konfirmasi')}}">
-            <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Pelanggan</span>
+            <span class="menu-title">Data Barang</span>
             </a>
         </li>
         <li class="nav-item @yield('dapel')">
             <a class="nav-link" href="{{route('pelanggan.index')}}">
             <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Transaksi User</span>
+            <span class="menu-title">Transaksi Pulsa User</span>
             </a>
         </li>
-        @else
-            <li class="nav-item @yield('dashboard')">
+        <li class="nav-item @yield('aksesoris')">
+            <a class="nav-link" href="{{route('pelanggan.index')}}">
+            <i class="mdi mdi-account menu-icon"></i>
+            <span class="menu-title">Transaksi Aksesoris User</span>
+            </a>
+        </li>
+        <li class="nav-item @yield('dapel')">
+            <a class="nav-link" href="{{route('laporanstock.index')}}">
+            <i class="mdi mdi-account menu-icon"></i>
+            <span class="menu-title">Laporan Transaksi Pulsa</span>
+            </a>
+        </li>
+        <li class="nav-item @yield('dapel')">
+            <a class="nav-link" href="{{route('laporanstock.index')}}">
+            <i class="mdi mdi-account menu-icon"></i>
+            <span class="menu-title">Laporan Transaksi Aksesoris</span>
+            </a>
+        </li>
+            {{-- <li class="nav-item @yield('dashboard')">
                 <a class="nav-link" href="{{route('transaksi-pulsa.create')}}">
                 <i class="mdi mdi-subway menu-icon"></i>
                 <span class="menu-title">Transaksi Pulsa</span>
@@ -111,8 +121,7 @@
                 <i class="mdi mdi-subway menu-icon"></i>
                 <span class="menu-title">History Transaksi</span>
                 </a>
-            </li>
-        @endif
+            </li> --}}
         <li class="nav-item">
             <a href="#" class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">
@@ -127,12 +136,12 @@
     </nav>
     <!-- partial -->
         <div class="main-panel">
-            @if (Auth::user()->roles != "ADMIN")
+            {{-- @if (Auth::user()->roles != "ADMIN")
             <div class="card-body">
                 <h2 class="card-title" style="color: black;">Selamat Datang di YPR Cell</h2>
                 <hr>
             </div>
-            @endif
+            @endif --}}
             @yield('content')
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->

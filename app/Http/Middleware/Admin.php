@@ -17,10 +17,6 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->roles == 'ADMIN') {
             return $next($request);
-        } else {
-            return redirect('/transaksi-pulsa/create');
-        }
     }
 }

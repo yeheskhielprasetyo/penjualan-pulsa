@@ -9,12 +9,17 @@ class Operator extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_operator', 'stock', 'id_harga'];
+    protected $fillable = ['id_user', 'nama_operator', 'stock', 'harga'];
 
     protected $table = 'operators';
 
-    public function harga()
+    // public function harga()
+    // {
+    //     return $this->belongsTo(Harga::class, 'id_harga');
+    // }
+
+    public function operator()
     {
-        return $this->belongsTo(Harga::class, 'id_harga');
+        return $this->hasMany(Laporan::class, 'id_operator');
     }
 }

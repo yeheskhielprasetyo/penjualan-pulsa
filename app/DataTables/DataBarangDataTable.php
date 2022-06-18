@@ -2,15 +2,16 @@
 
 namespace App\DataTables;
 
-use App\Models\Operator;
-use Carbon\Carbon;
+// use App\Models\DataBarangDataTable;
+
+use App\Models\DataBarang;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OperatorDataTable extends DataTable
+class DataBarangDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,26 +24,23 @@ class OperatorDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($data) {
-                $action = '<button type="button" class="waves-effect btn btn-sm btn-danger" onclick="actionoperator(\'' . 'hapus' . '\',\'' . $data->id . '\')">
+                $action = '<button type="button" class="waves-effect btn btn-sm btn-danger" onclick="action(\'' . 'hapus' . '\',\'' . $data->id . '\')">
                 <i class="material-icons" style="color:white;">clear</i>
                 </button>
-                <button type="button" class="waves-effect btn btn-sm btn-primary" onclick="actionoperator(\'' . 'edit' . '\',\'' . $data->id . '\')">
+                <button type="button" class="waves-effect btn btn-sm btn-primary" onclick="action(\'' . 'edit' . '\',\'' . $data->id . '\')">
                 <i class="material-icons" style="color:white;">edit</i>
                 </button>';
                 return $action;
-            })
-            ->addColumn('created_at', function ($data) {
-                return Carbon::parse($data->created_at)->translatedFormat('l, d F Y');
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Operator $model
+     * @param \App\Models\DataBarangDataTable $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Operator $model)
+    public function query(DataBarang $model)
     {
         return $model->newQuery();
     }
@@ -55,12 +53,12 @@ class OperatorDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('operatordatatable-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            // ->dom('Bfrtip')
-            ->orderBy(0, 'desc')
-            ->autoWidth(false);
+                    ->setTableId('databarangdatatable-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    // ->dom('Bfrtip')
+                    ->orderBy(0, 'desc')
+                    ->autoWidth(false);
     }
 
     /**
@@ -74,10 +72,9 @@ class OperatorDataTable extends DataTable
             'id' => ['title' => 'No', 'orderable' => true, 'searchable' => true, 'render' => function () {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            Column::make('nama_operator')->title('Nama Operator'),
-            Column::make('stock')->title('Stock'),
-            Column::make('harga')->title('Harga'),
-            Column::make('created_at')->title('Tanggal'),
+            Column::make('nama_barang')->title('Nama Barang'),
+            Column::make('harga_barang')->title('Harga Barang'),
+            Column::make('jenis_barang')->title('Jenis Barang'),
             Column::computed('action')
                 ->exportable(FALSE)
                 ->printable(FALSE)
@@ -93,6 +90,6 @@ class OperatorDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Operator_' . date('YmdHis');
+        return 'DataBarang_' . date('YmdHis');
     }
 }

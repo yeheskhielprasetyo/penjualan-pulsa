@@ -1,4 +1,4 @@
-<form action="{{ route('harga.destroy',[$data->id])}}" method="post">
+<form action="{{ route('data_barang.destroy',[$data->id])}}" method="post">
     @csrf
     @method('DELETE')
     <!-- Modal -->

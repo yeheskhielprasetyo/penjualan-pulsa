@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\TransaksiPulsaDataTable;
+use App\Models\DataBarang;
+use App\Models\DetailTransaksiAksesoris;
 use App\Models\Harga;
 use App\Models\Operator;
 use App\Models\Stock;
 use App\Models\Transaksi;
 use App\Models\TransaksiPulsa;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Events\TransactionRolledBack;
 use Illuminate\Http\Request;
@@ -17,10 +20,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TransaksiPulsaController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Display a listing of the resource.
@@ -37,13 +40,12 @@ class TransaksiPulsaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $operator = Operator::all();
-        return view('layouts.user.transaksi.index', [
-            'operator' => $operator,
-        ]);
-    }
+    // public function create()
+    // {
+    //     $operator = Operator::all();
+    //     $data_barang = DataBarang::all();
+    //     return view('layouts.index');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -54,31 +56,42 @@ class TransaksiPulsaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jumlah' => 'required',
-            'no_hp' => 'required'
+            'nama' => 'required',
+            'jumlah' => 'required|numeric',
+            'no_hp' => 'required|numeric',
+            'operator' => 'required'
+        ],
+        [
+            'nama.required' => 'Nama harus diisi',
+            'jumlah.required' => 'Jumlah harus diisi',
+            'jumlah.numeric' => 'Jumlah harus berisikan angka',
+            'no_hp.required' => 'Nomor Hp harus diisi',
+            'no_hp.numeric' => 'Nomor Hp harus berisikan angka',
+            'operator.required' => 'Operator harus dipilih'
         ]);
 
         try {
-            $user = Auth::user()->id;
+            // $user = Auth::user()->id;
             $operator = Operator::find($request->operator);
             $transaksi = new Transaksi();
-            $transaksi->id_user = $user;
+            $transaksi->nama = $request->nama;
             $transaksi->id_operator = $request->operator;
             $transaksi->jumlah = $request->jumlah;
             $transaksi->no_hp = $request->no_hp;
-            $transaksi->total_harga = $operator->harga->harga *= $request->jumlah;
-            if ($request->jumlah >= $operator->stock) {
-                Alert::warning('Gagal!', 'Stock Sudah Habis');
-                return redirect()->back();
-            } else {
-                $operator->stock -= $request->jumlah;
-            }
+            $operator->stock -= $request->jumlah;
             $operator->save();
+            $transaksi->total_harga = $operator->harga *= $request->jumlah;
+            if ($request->jumlah >= $operator->stock) {
+                Alert::warning('Gagal!', 'Stock Tidak Mencukupi');
+                return redirect()->back();
+            }
+            $date = Carbon::now();
+            $transaksi->created_at = $date->toDateTimeString();
             $transaksi->save();
-            Alert::success('Berhasil!', 'menambah data transaksi');
+            Alert::success('Berhasil!', 'menambah data transaksi pulsa');
             return redirect()->back();
         } catch (Exception $e) {
-            Alert::warning('Gagal!', 'menambah data transaksi');
+            Alert::warning('Gagal!', 'menambah data transaksi pulsa');
             return redirect()->back();
         }
     }
@@ -171,6 +184,34 @@ class TransaksiPulsaController extends Controller
             }
         } else {
             Alert::warning('Gagal!', 'Gagal menampilkan data transaksi');
+            return redirect()->back();
+        }
+    }
+
+    public function transaksi_aksesoris(Request $request)
+    {
+        $request->validate([
+            'barang' => 'required',
+            'banyak' => 'required|numeric',
+        ],
+        [
+            'barang.required' => 'Barang harus diisi',
+            'banyak.required' => 'Jumlah harus diisi',
+            'banyak.numeric' => 'Jumlah harus berisikan angka',
+        ]);
+
+        try {
+            // $user = Auth::user()->id;
+            $data_barang = DataBarang::find($request->barang);
+            $transaksi = new DetailTransaksiAksesoris();
+            $transaksi->id_barang = $request->barang;
+            $transaksi->banyak = $request->banyak;
+            $transaksi->total = $data_barang->harga_barang *= $request->banyak;
+            $transaksi->save();
+            Alert::success('Berhasil!', 'menambah data transaksi aksesoris');
+            return redirect()->back();
+        } catch (Exception $e) {
+            Alert::warning('Gagal!', 'menambah data transaksi aksesoris');
             return redirect()->back();
         }
     }

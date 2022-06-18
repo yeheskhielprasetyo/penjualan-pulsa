@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Operator;
+use App\Models\Transaksi;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -10,7 +11,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OperatorDataTable extends DataTable
+class LaporanStockDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,27 +23,25 @@ class OperatorDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', function ($data) {
-                $action = '<button type="button" class="waves-effect btn btn-sm btn-danger" onclick="actionoperator(\'' . 'hapus' . '\',\'' . $data->id . '\')">
-                <i class="material-icons" style="color:white;">clear</i>
-                </button>
-                <button type="button" class="waves-effect btn btn-sm btn-primary" onclick="actionoperator(\'' . 'edit' . '\',\'' . $data->id . '\')">
-                <i class="material-icons" style="color:white;">edit</i>
-                </button>';
-                return $action;
-            })
             ->addColumn('created_at', function ($data) {
                 return Carbon::parse($data->created_at)->translatedFormat('l, d F Y');
+            })
+            ->addColumn('id_operator', function ($data) {
+                return $data->operator->nama_operator;
+            })
+            ->addColumn('jumlah', function ($data) {
+                $transaksi = Transaksi::select('jumlah')->where('id_operator', '=', $data->id_operator)->where('created_at', '=', Carbon::parse($data->created_at))->sum('jumlah');
+                return $transaksi;
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Operator $model
+     * @param \App\Models\Transaksi $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Operator $model)
+    public function query(Transaksi $model)
     {
         return $model->newQuery();
     }
@@ -55,7 +54,7 @@ class OperatorDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('operatordatatable-table')
+            ->setTableId('laporanstockdatatable-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             // ->dom('Bfrtip')
@@ -74,15 +73,14 @@ class OperatorDataTable extends DataTable
             'id' => ['title' => 'No', 'orderable' => true, 'searchable' => true, 'render' => function () {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            Column::make('nama_operator')->title('Nama Operator'),
-            Column::make('stock')->title('Stock'),
-            Column::make('harga')->title('Harga'),
+            Column::make('id_operator')->title('Operator'),
+            Column::make('jumlah')->title('Total Stock'),
             Column::make('created_at')->title('Tanggal'),
-            Column::computed('action')
-                ->exportable(FALSE)
-                ->printable(FALSE)
-                ->width(60)
-                ->addClass('text-center'),
+            // Column::computed('action')
+            //     ->exportable(FALSE)
+            //     ->printable(FALSE)
+            //     ->width(60)
+            //     ->addClass('text-center'),
         ];
     }
 
@@ -93,6 +91,6 @@ class OperatorDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Operator_' . date('YmdHis');
+        return 'LaporanStock_' . date('YmdHis');
     }
 }

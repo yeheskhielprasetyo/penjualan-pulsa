@@ -4,7 +4,7 @@
     <section class="section">
         <div class="card" style="width:100%;">
             <div class="card-body">
-                <h2 class="card-title" style="color: black;">Data Transaksi Pulsa User</h2>
+                <h2 class="card-title" style="color: black;">Laporan Transaksi Pulsa</h2>
                 <hr>
             </div>
             <div class="row">
@@ -22,19 +22,4 @@
 </div>
 
 
-<div id="result"></div>
-<script>
-    function actionpelanggan(action, id){
-        $.ajax({
-        url:"pelanggan/"+action+"/"+id,
-        method:"GET",
-            success:function(data){
-                $('#result').html(data.html);
-            },
-            error:function() {
-            alert("gagal");
-            }
-        });
-    }
-</script>
 @endsection

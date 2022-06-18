@@ -2,29 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\OperatorDataTable;
-use App\Models\Harga;
-use App\Models\Operator;
+use App\DataTables\DataBarangDataTable;
+use App\Models\DataBarang;
 use Exception;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class OperatorController extends Controller
+class DataBarangController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(OperatorDataTable $dataTable)
+    public function index(DataBarangDataTable $dataTable)
     {
-        // $harga = Harga::all();
-        return $dataTable->render('layouts.admin.operator.index');
+        return $dataTable->render('layouts.admin.aksesoris.data_barang.index');
     }
 
     /**
@@ -46,31 +39,30 @@ class OperatorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_operator' => 'required',
-            'stock' => 'required|numeric',
-            'harga' => 'required|numeric'
+            'nama_barang' => 'required',
+            'harga_barang' => 'required|numeric',
+            'jenis_barang' => 'required',
         ],
-
         [
-            'nama_operator.required' => 'Gagal! Nama Operator harus diisi',
-            'stock.required' => 'Gagal! Stock harus diisi',
-            'stock.numeric' => 'Gagal! Stock harus berisikan angka',
-            'harga.required' => 'Gagal! Harga harus diisi',
-            'harga.numeric' => 'Gagal! Harga harus berisikan angka'
+            'nama_barang.required' => 'Nama Barang harus diisi',
+            'harga_barang.required' => 'Harga harus diisi',
+            'harga_barang.numeric' => 'Harga harus berisikan angka',
+            'jenis_barang.required' => 'Jenis harus diisi',
         ]);
 
         try {
+            // $user = Auth::user()->id;
             $user = auth()->user()->id;
-            $operator = new Operator();
-            $operator->id_user = $user;
-            $operator->nama_operator = $request->nama_operator;
-            $operator->stock = $request->stock;
-            $operator->harga = $request->harga;
-            $operator->save();
-            Alert::success('Berhasil!', 'menambah data operator');
+            $data_barang = new DataBarang();
+            $data_barang->nama_barang = $request->nama_barang;
+            $data_barang->harga_barang = $request->harga_barang;
+            $data_barang->jenis_barang = $request->jenis_barang;
+            $data_barang->id_user = $user;
+            $data_barang->save();
+            Alert::success('Berhasil!', 'menambah data barang');
             return redirect()->back();
         } catch (Exception $e) {
-            Alert::warning('Gagal!', 'menambah data operator');
+            Alert::warning('Gagal!', 'menambah data barang');
             return redirect()->back();
         }
     }
@@ -107,17 +99,18 @@ class OperatorController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            // $user = Auth::user()->id;
             $user = auth()->user()->id;
-            $operator = Operator::find($id);
-            $operator->id_user = $user;
-            $operator->nama_operator = $request->nama_operator;
-            $operator->stock = $request->stock;
-            $operator->harga = $request->harga;
-            $operator->save();
-            Alert::success('Berhasil!', 'menambah data operator');
+            $data_barang = DataBarang::find($id);
+            $data_barang->nama_barang = $request->nama_barang;
+            $data_barang->harga_barang = $request->harga_barang;
+            $data_barang->jenis_barang = $request->jenis_barang;
+            $data_barang->id_user = $user;
+            $data_barang->save();
+            Alert::success('Berhasil!', 'merubah data barang');
             return redirect()->back();
         } catch (Exception $e) {
-            Alert::warning('Gagal!', 'menambah data operator');
+            Alert::warning('Gagal!', 'merubah data barang');
             return redirect()->back();
         }
     }
@@ -131,26 +124,25 @@ class OperatorController extends Controller
     public function destroy($id)
     {
         try {
-            Operator::where('id', $id)->delete();
-            Alert::success('Berhasil!', 'menghapus data operator');
+            DataBarang::where('id', $id)->delete();
+            Alert::success('Berhasil!', 'menghapus data barang');
             return redirect()->back();
         } catch (Exception $e) {
-            Alert::warning('Gagal!', 'menghapus data operator');
+            Alert::warning('Gagal!', 'menghapus data barang');
             return redirect()->back();
         }
     }
 
-
-    public function actionoperator($action, $id)
+    public function action($action, $id)
     {
         // $harga = Harga::all();
-        $operator =  Operator::where('id', $id)->first();
-        if (count($operator->get()) > 0) {
+        $data_barang =  DataBarang::where('id', $id)->first();
+        if (count($data_barang->get()) > 0) {
             if ($action == "hapus") {
-                $returnHTML = view('layouts.admin.operator.hapus', ['data' => $operator])->render();
+                $returnHTML = view('layouts.admin.aksesoris.data_barang.hapus', ['data' => $data_barang])->render();
                 return response()->json(['html' => $returnHTML]);
             } elseif ($action == "edit") {
-                $returnHTML = view('layouts.admin.operator.edit', ['data' => $operator])->render();
+                $returnHTML = view('layouts.admin.aksesoris.data_barang.edit', ['data' => $data_barang])->render();
                 return response()->json(['html' => $returnHTML]);
             }
         } else {

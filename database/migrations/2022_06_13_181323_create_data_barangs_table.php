@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOperatorsTable extends Migration
+class CreateDataBarangsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateOperatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('operators', function (Blueprint $table) {
+        Schema::create('data_barangs', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_barang');
+            $table->string('harga_barang');
+            $table->string('jenis_barang');
             $table->unsignedBigInteger('id_user');
-            $table->string('nama_operator');
-            $table->string('stock');
-            $table->string('harga');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateOperatorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('operators');
+        Schema::dropIfExists('data_barangs');
     }
 }

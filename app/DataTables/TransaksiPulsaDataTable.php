@@ -37,9 +37,6 @@ class TransaksiPulsaDataTable extends DataTable
                 </button>';
                 return $action;
             })
-            ->addColumn('id_user', function ($data) {
-                return $data->user->name;
-            })
             ->addColumn('id_operator', function ($data) {
                 return $data->operator->nama_operator;
             })
@@ -105,13 +102,11 @@ class TransaksiPulsaDataTable extends DataTable
             'id' => ['title' => 'No', 'orderable' => true, 'searchable' => true, 'render' => function () {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            Column::make('id_user')->title('Nama Pembeli'),
+            Column::make('nama')->title('Nama Pembeli'),
             Column::make('id_operator')->title('Nama Operator'),
             Column::make('jumlah')->title('Jumlah'),
             Column::make('no_hp')->title('No Hp'),
             Column::make('total_harga')->title('Total Harga'),
-            Column::make('gambar')->title('Bukti Pembayaran'),
-            Column::make('status')->title('Status'),
             Column::make('created_at')->title('Tanggal'),
             Column::computed('action')
                 ->exportable(FALSE)
