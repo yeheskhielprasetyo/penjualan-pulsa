@@ -70,9 +70,8 @@ class TransaksiPulsaDataTable extends DataTable
      */
     public function query(Transaksi $model)
     {
-        $user = Auth::user()->id;
         // $users = User::where('id_user', $user)->get();
-        return $model->newQuery()->where('id_user', $user);
+        return $model->newQuery();
     }
 
     /**

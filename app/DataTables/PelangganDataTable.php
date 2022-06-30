@@ -24,19 +24,55 @@ class PelangganDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($data) {
-                $action = ' <button type="button" class="waves-effect btn btn-sm btn-primary" onclick="actionpelanggan(\'' . 'konfirmasi' . '\',\'' . $data->id . '\')">
+                $action = ' <button type="button" class="waves-effect btn btn-sm btn-primary" onclick="action(\'' . 'konfirmasi' . '\',\'' . $data->id . '\')">
                 <i class="material-icons" style="color:white;">done</i>
                 </button>
-                <button type="button" class="waves-effect btn btn-sm btn-danger" onclick="actionpelanggan(\'' . 'hapus' . '\',\'' . $data->id . '\')">
+                <button type="button" class="waves-effect btn btn-sm btn-danger" onclick="action(\'' . 'hapus' . '\',\'' . $data->id . '\')">
                 <i class="material-icons" style="color:white;">clear</i>
                 </button>';
                 return $action;
             })
             ->addColumn('id_operator', function ($data) {
-                return $data->operator->nama_operator;
+                if($data->id_operator == null){
+                    return  "Tidak ada";
+                } else {
+                    return $data->operator->nama_operator;
+                }
+            })
+            ->addColumn('total_harga', function ($data) {
+                return "Rp." . " " . " " . $data->total_harga;
+            })
+            ->addColumn('id_barang', function ($data) {
+                if($data->id_barang == null){
+                    return  "Tidak ada";
+                } else {
+                    return $data->barang->nama_barang;
+                }
+
+            })
+            ->addColumn('jumlah', function ($data) {
+                if($data->jumlah == null){
+                    return  "Tidak ada";
+                } else {
+                    return $data->jumlah;
+                }
+            })
+            ->addColumn('jumlah_aksesoris', function ($data) {
+                if($data->jumlah_aksesoris == null){
+                    return  "Tidak ada";
+                } else {
+                    return $data->jumlah_aksesoris;
+                }
+            })
+            ->addColumn('no_hp', function ($data) {
+                if($data->no_hp == null){
+                    return  "Tidak ada";
+                } else {
+                    return $data->no_hp;
+                }
             })
             ->addColumn('created_at', function ($data) {
-                return Carbon::parse($data->created_at)->translatedFormat('l, d F Y');
+                return Carbon::parse($data->created_at)->translatedFormat('l, d F Y, H:i');
             });
     }
 
@@ -48,7 +84,7 @@ class PelangganDataTable extends DataTable
      */
     public function query(Transaksi $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('status', '=', 'PENDING');
     }
 
     /**
@@ -78,12 +114,14 @@ class PelangganDataTable extends DataTable
             'id' => ['title' => 'No', 'orderable' => true, 'searchable' => true, 'render' => function () {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            Column::make('nama')->title('Nama Pembeli'),
-            Column::make('id_operator')->title('Nama Operator'),
-            Column::make('jumlah')->title('Jumlah'),
-            Column::make('no_hp')->title('No Hp'),
-            Column::make('total_harga')->title('Total Harga'),
             Column::make('created_at')->title('Tanggal'),
+            Column::make('nama')->title('Nama Pembeli'),
+            Column::make('total_harga')->title('Total Harga'),
+            Column::make('id_operator')->title('Nama Operator'),
+            Column::make('id_barang')->title('Nama Barang'),
+            Column::make('jumlah')->title('Jumlah Pulsa'),
+            Column::make('jumlah_aksesoris')->title('Jumlah Aksesoris'),
+            Column::make('no_hp')->title('No Hp'),
             Column::computed('action')
                 ->exportable(FALSE)
                 ->printable(FALSE)

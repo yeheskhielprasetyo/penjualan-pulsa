@@ -24,14 +24,14 @@ class IndexController extends Controller
         $operator = Operator::all();
         $data_barang = DataBarang::all();
         $transaksi = Transaksi::latest()->limit(1)->pluck('total_harga')->implode('total_harga');
-        $transaksiaksesoris = DetailTransaksiAksesoris::latest()->limit(1)->pluck('total')->implode('total');
+        // $transaksiaksesoris = DetailTransaksiAksesoris::latest()->limit(1)->pluck('total')->implode('total');
         // $total = $transaksi + $transaksiaksesoris;
         return view('layouts.index', [
             'operator' => $operator,
             'data_barang' => $data_barang,
             // 'transaksitotal' => $total,
             'transaksi' => $transaksi,
-            'transaksiaksesoris' => $transaksiaksesoris
+            // 'transaksiaksesoris' => $transaksiaksesoris
         ]);
     }
 

@@ -75,6 +75,7 @@ class DataBarangDataTable extends DataTable
             Column::make('nama_barang')->title('Nama Barang'),
             Column::make('harga_barang')->title('Harga Barang'),
             Column::make('jenis_barang')->title('Jenis Barang'),
+            Column::make('satuan')->title('Satuan'),
             Column::computed('action')
                 ->exportable(FALSE)
                 ->printable(FALSE)

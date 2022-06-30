@@ -23,9 +23,9 @@
 
 <div id="result"></div>
 <script>
-    function actionkonfirmasi(action, id){
+    function action(id){
         $.ajax({
-        url:"../pelanggan-konfirmasi/"+action+"/"+id,
+        url:"delete-konfirmasi/"+action+"/"+id,
         method:"GET",
             success:function(data){
                 $('#result').html(data.html);

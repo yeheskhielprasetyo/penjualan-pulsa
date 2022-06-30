@@ -34,6 +34,23 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                     <div class="align-self-center">
+                                        <i class="icon-pencil primary font-large-2 float-left"></i>
+                                    </div>
+                                    <div class="media-body text-right">
+                                        <h3>{{$operator}}</h3>
+                                        <span>Aksesoris Barang</span>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="col-xl-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                    <div class="align-self-center">
                                         <i class="icon-speech warning font-large-2 float-left"></i>
                                     </div>
                                     <div class="media-body text-right">
@@ -45,6 +62,40 @@
                                 </div>
                             </div>
                             </div>
+                            <div class="col-xl-3 col-sm-6 col-12">
+                                <div class="card">
+                                    <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-speech warning font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3>{{$datakonfirmasi}}</h3>
+                                            <span>Data Konfirmasi</span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-xl-3 col-sm-6 col-12">
+                                    <div class="card">
+                                        <div class="card-content">
+                                        <div class="card-body">
+                                            <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-speech warning font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-right">
+                                                <h3>{{$datapending}}</h3>
+                                                <span>Data Pending</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
                     </div>
                 </section>
                 </div>

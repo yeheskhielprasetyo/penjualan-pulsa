@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PelangganKonfirmasiDataTable;
+use App\Models\DataTransaksi;
 use App\Models\Pelanggan;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class PelangganKonfirmasiController extends Controller
     public function delete($id)
     {
         try {
-            Pelanggan::where('id', $id)->delete();
+            DataTransaksi::where('id', $id)->delete();
             Alert::success('Berhasil!', 'menghapus pelanggan');
             return redirect()->back();
         } catch (Exception $e) {
@@ -27,9 +28,10 @@ class PelangganKonfirmasiController extends Controller
         }
     }
 
-    public function actionkonfirmasi($action, $id)
+    public function action($action, $id)
     {
-        $pelanggan =  Pelanggan::where('id', $id)->first();
+        $pelanggan =  DataTransaksi::where('id', $id)->first();
+        dd($pelanggan);
         if (count($pelanggan->get()) > 0) {
             if ($action == "hapus") {
                 $returnHTML = view('layouts.admin.pelanggan.hapus-pelanggan', ['data' => $pelanggan])->render();

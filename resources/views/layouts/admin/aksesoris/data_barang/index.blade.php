@@ -55,6 +55,16 @@
                 <label for="recipient-name" class="col-form-label">Jenis Barang</label>
                 <input type="text" class="form-control" id="recipient-name"  name="jenis_barang">
             </div>
+            <div class="form-group">
+                <label for="id_pegawai ">Satuan</label>
+                <select class="form-control @error('satuan') is-invalid @enderror" id="idsatuan" name="satuan" style="color: #8d827f">
+                {{-- <input type="hidden" id="operator" value="0"> --}}
+                    <option disable value="">- Pilih Satuan -</option>
+                    <option value="pcs">Pcs</option>
+                    <option value="buah">Buah</option>
+                    <option value="lusin">Lusin</option>
+                </select>
+            </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save</button>
@@ -66,6 +76,10 @@
     </div>
 </div>
 
+<script src="{{asset('assets/js/chosen.jquery.min.js')}}"></script>
+<script>
+    $('#idsatuan').chosen({ width: '100%' });
+</script>
 
 <div id="result"></div>
 <script>

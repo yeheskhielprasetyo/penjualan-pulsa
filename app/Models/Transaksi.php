@@ -9,24 +9,23 @@ class Transaksi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'id_operator', 'jumlah', 'no_hp', 'total_harga', 'created_at'];
+    protected $fillable = ['nama', 'id_operator', 'id_barang', 'jumlah', 'jumlah_aksesoris', 'no_hp', 'total_harga', 'status'];
 
     protected $table = 'transaksis';
 
-    public $timestamps = false;
 
     public function operator()
     {
-        return $this->belongsTo(Operator::class, 'id_operator');
+        return $this->belongsTo(Operator::class, 'id_operator', 'id');
     }
 
-    public function transaksi_aksesoris()
+    public function barang()
     {
-        return $this->belongsTo(DetailTransaksiAksesoris::class, 'id');
+        return $this->belongsTo(DataBarang::class, 'id_barang', 'id');
     }
 
     public function transaksi()
     {
-        return $this->hasMany(Pelanggan::class, 'id_transaksi_pulsa');
+        return $this->hasMany(DataTransaksi::class, 'id_transaksi', 'id');
     }
 }

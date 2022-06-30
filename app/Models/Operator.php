@@ -13,13 +13,8 @@ class Operator extends Model
 
     protected $table = 'operators';
 
-    // public function harga()
-    // {
-    //     return $this->belongsTo(Harga::class, 'id_harga');
-    // }
-
     public function operator()
     {
-        return $this->hasMany(Laporan::class, 'id_operator');
+        return $this->hasMany(Transaksi::class, 'id_operator', 'id');
     }
 }

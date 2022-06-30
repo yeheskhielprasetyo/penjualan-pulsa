@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\DataTransaksi;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use App\Models\User;
@@ -25,26 +26,24 @@ class PelangganKonfirmasiDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($data) {
-                $action = '<button type="button" class="waves-effect btn btn-sm btn-danger" onclick="actionkonfirmasi(\'' . 'hapus' . '\',\'' . $data->id . '\')">
+                $action = '<button type="button" class="waves-effect btn btn-sm btn-danger" onclick="action(\'' . 'hapus' . '\',\'' . $data->id . '\')">
                 <i class="material-icons" style="color:white;">clear</i>
                 </button>';
                 return $action;
             })
-            ->addColumn('id_transaksi_pulsa', function ($data) {
-                return $data->transaksi->nama . ' | ' . 'Operator' . ' ' .  $data->transaksi->operator->nama_operator . ' | ' . ' Total Harga ' . 'Rp.' .  $data->transaksi->total_harga;
-            })
-            ->addColumn('created_at', function ($data) {
-                return Carbon::parse($data->created_at)->translatedFormat('l, d F Y');
-            })
-            ->addColumn('id', function ($data) {
-                if ($data->transaksi->gambar > 0) {
-                    $file = "bukti_pembayaran/" . $data->transaksi->gambar;
-                    return '<a href=' . asset($file) . ' target="_blank">' . '<img class="mg-thumbnail" width="100" height="70" src=' . asset($file) . '>' . '</a>';
+            ->addColumn('id_transaksi', function ($data) {
+                if($data->transaksi->nama != null){
+                    return $data->transaksi->nama;
                 } else {
-                    return "Tidak Ada";
+                    return "Tidak ada";
                 }
             })
-            ->rawColumns(['id', 'action']);
+            ->addColumn('sub_total', function ($data) {
+                return "Rp." . " " . " " . $data->sub_total;
+            })
+            ->addColumn('tanggal_transaksi', function ($data) {
+                return Carbon::parse($data->tanggal_transaksi)->translatedFormat('l, d F Y, H:i');
+            });
     }
 
     /**
@@ -53,7 +52,7 @@ class PelangganKonfirmasiDataTable extends DataTable
      * @param \App\Models\Pelanggan $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Pelanggan $model)
+    public function query(DataTransaksi $model)
     {
         return $model->newQuery();
     }
@@ -85,16 +84,14 @@ class PelangganKonfirmasiDataTable extends DataTable
             'id' => ['title' => 'No', 'orderable' => true, 'searchable' => true, 'render' => function () {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-
-            Column::make('id_transaksi_pulsa')->title('Keterangan'),
-            Column::make('id')->title('Bukti Pembayaran'),
-            Column::make('status')->title('Status'),
-            Column::make('created_at')->title('Tanggal'),
-            Column::computed('action')
-                ->exportable(FALSE)
-                ->printable(FALSE)
-                ->width(60)
-                ->addClass('text-center'),
+            Column::make('id_transaksi')->title('Nama Pembeli'),
+            Column::make('tanggal_transaksi')->title('Tanggal Transaksi'),
+            Column::make('sub_total')->title('Total'),
+            // Column::computed('action')
+            //     ->exportable(FALSE)
+            //     ->printable(FALSE)
+            //     ->width(60)
+            //     ->addClass('text-center'),
         ];
     }
 

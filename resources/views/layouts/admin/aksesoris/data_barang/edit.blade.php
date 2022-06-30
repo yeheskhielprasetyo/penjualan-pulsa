@@ -24,6 +24,16 @@
                     <label for="recipient-name" class="col-form-label">Jenis Barang</label>
                     <input type="text" class="form-control" id="recipient-name"  name="jenis_barang" value="{{$data->jenis_barang}}">
                 </div>
+                <div class="form-group">
+                    <label for="editsatuan ">Satuan</label>
+                    <select class="form-control @error('satuan') is-invalid @enderror" id="editsatuan" name="satuan" style="color: #8d827f">
+                    {{-- <input type="hidden" id="operator" value="0"> --}}
+                        <option value="">- Pilih Satuan -</option>
+                        <option value="pcs" @if($data->satuan == 'pcs') selected @endif>Pcs</option>
+                        <option value="buah" @if($data->satuan == 'buah') selected @endif>Buah</option>
+                        <option value="lusin" @if($data->satuan == 'lusin') selected @endif>Lusin</option>
+                    </select>
+                </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -34,6 +44,11 @@
     </div>
     </div>
 </div>
+<script src="{{asset('assets/js/chosen.jquery.min.js')}}"></script>
+<script>
+    $('#editsatuan').chosen({ width: '100%' });
+</script>
+
 <script>
     $("#modal-editharga").modal('show');
         $.fn.modal.Constructor.prototype._enforceFocus = function() {

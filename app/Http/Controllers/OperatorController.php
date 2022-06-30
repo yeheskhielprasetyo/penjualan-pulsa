@@ -63,6 +63,14 @@ class OperatorController extends Controller
             $user = auth()->user()->id;
             $operator = new Operator();
             $operator->id_user = $user;
+            $operators = Operator::where('nama_operator', '=', $request->input('nama_operator'))->first();
+            // if ($operators === null) {
+            //     $operator->nama_operator = $request->nama_operator;
+            // } else {
+            // // User exits
+            // Alert::warning('Gagal!', 'nama operator tidak boleh sama');
+            // return redirect()->back();
+            // }
             $operator->nama_operator = $request->nama_operator;
             $operator->stock = $request->stock;
             $operator->harga = $request->harga;

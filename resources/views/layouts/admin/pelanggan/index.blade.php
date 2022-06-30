@@ -24,7 +24,7 @@
 
 <div id="result"></div>
 <script>
-    function actionpelanggan(action, id){
+    function action(action, id){
         $.ajax({
         url:"pelanggan/"+action+"/"+id,
         method:"GET",

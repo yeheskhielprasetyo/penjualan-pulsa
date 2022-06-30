@@ -55,7 +55,7 @@
         <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item nav-profile dropdown">
             {{-- <img src="" alt="profile"/> --}}
-            <span class="nav-profile-name" style="color: black">Selamat Datang {{Auth::user()->name}}</span>
+            <span class="nav-profile-name" style="color: black">Selamat Datang {{Auth::user()->username}}</span>
         </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -89,39 +89,34 @@
         <li class="nav-item @yield('dapel')">
             <a class="nav-link" href="{{route('pelanggan.index')}}">
             <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Transaksi Pulsa User</span>
+            <span class="menu-title">Transaksi User</span>
             </a>
         </li>
         <li class="nav-item @yield('aksesoris')">
-            <a class="nav-link" href="{{route('pelanggan.index')}}">
+            <a class="nav-link" href="{{route('pelanggan.konfirmasi')}}">
             <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Transaksi Aksesoris User</span>
+            <span class="menu-title">Data Transaksi User</span>
             </a>
         </li>
-        <li class="nav-item @yield('dapel')">
-            <a class="nav-link" href="{{route('laporanstock.index')}}">
-            <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Laporan Transaksi Pulsa</span>
-            </a>
-        </li>
-        <li class="nav-item @yield('dapel')">
-            <a class="nav-link" href="{{route('laporanstock.index')}}">
-            <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Laporan Transaksi Aksesoris</span>
-            </a>
-        </li>
-            {{-- <li class="nav-item @yield('dashboard')">
-                <a class="nav-link" href="{{route('transaksi-pulsa.create')}}">
-                <i class="mdi mdi-subway menu-icon"></i>
-                <span class="menu-title">Transaksi Pulsa</span>
+        <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="mdi mdi-circle-outline menu-icon"></i>
+                <span class="menu-title">Laporan</span>
+                <i class="menu-arrow"></i>
                 </a>
-            </li>
-            <li class="nav-item @yield('dashboard')">
-                <a class="nav-link" href="{{route('transaksi-pulsa.index')}}">
-                <i class="mdi mdi-subway menu-icon"></i>
-                <span class="menu-title">History Transaksi</span>
-                </a>
-            </li> --}}
+                <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{route('laporan.operator')}}">Operator</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('laporan.aksesoris')}}">Aksesoris</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item @yield('ubahpass')">
+            <a class="nav-link" href="{{route('ubah-password.index')}}">
+            <i class="mdi mdi-account menu-icon"></i>
+            <span class="menu-title">Ubah Password</span>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="#" class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">

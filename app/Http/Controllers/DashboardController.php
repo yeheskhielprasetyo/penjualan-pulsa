@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataBarang;
+use App\Models\DataTransaksi;
 use App\Models\Harga;
 use App\Models\Operator;
 use App\Models\Transaksi;
@@ -18,12 +20,17 @@ class DashboardController extends Controller
     {
         // $harga = Harga::all()->count();
         $operator = Operator::all()->count();
+        $aksesoris = DataBarang::all()->count();
         $pelanggan = Transaksi::all()->count();
-
+        $datakonfirmasi = DataTransaksi::all()->count();
+        $datapending = Transaksi::where('status', '=', 'PENDING')->count();
         return view('layouts.admin.dashboard.dashboard', [
             // 'harga' => $harga,
             'operator' => $operator,
-            'pelanggan' => $pelanggan
+            'pelanggan' => $pelanggan,
+            'datakonfirmasi' => $datakonfirmasi,
+            'datapending' => $datapending,
+            'aksesoris' => $aksesoris
         ]);
     }
 }

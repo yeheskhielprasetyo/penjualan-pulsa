@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PelangganDataTable;
+use App\Models\DataTransaksi;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -93,7 +95,7 @@ class PelangganController extends Controller
         }
     }
 
-    public function actionpelanggan($action, $id)
+    public function action($action, $id)
     {
         $transaksi =  Transaksi::where('id', $id)->first();
         if (count($transaksi->get()) > 0) {
@@ -114,14 +116,23 @@ class PelangganController extends Controller
     {
         try {
             $transaksi = Transaksi::find($id);
-            $konfirmasi = new Pelanggan();
-            $konfirmasi->id_transaksi_pulsa = $transaksi->id;
-            $konfirmasi->status = "Konfirmasi";
+            $konfirmasi = new DataTransaksi();
+            $datenow = Carbon::now();
+            $konfirmasi->tanggal_transaksi = $datenow->toDateTimeString();
+            $konfirmasi->id_transaksi = $transaksi->id;
+            $konfirmasi->sub_total = $transaksi->total_harga;
             $konfirmasi->save();
+
+            if($konfirmasi){
+                $transaksi->status = 'KONFIRMASI';
+                $transaksi->save();
+            }
+
             Alert::success('Berhasil!', 'konfirmasi');
             return redirect()->back();
         } catch (Exception $e) {
-            Alert::warning('Gagal!', 'konfirmasi');
+            dd($konfirmasi);
+            Alert::warning('Gagal!', 'konfirmasiii');
             return redirect()->back();
         }
     }

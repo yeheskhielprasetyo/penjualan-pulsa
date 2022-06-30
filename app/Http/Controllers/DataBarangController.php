@@ -42,12 +42,14 @@ class DataBarangController extends Controller
             'nama_barang' => 'required',
             'harga_barang' => 'required|numeric',
             'jenis_barang' => 'required',
+            'satuan' => 'required',
         ],
         [
-            'nama_barang.required' => 'Nama Barang harus diisi',
-            'harga_barang.required' => 'Harga harus diisi',
-            'harga_barang.numeric' => 'Harga harus berisikan angka',
-            'jenis_barang.required' => 'Jenis harus diisi',
+            'nama_barang.required' => 'Gagal!, Nama Barang harus diisi',
+            'harga_barang.required' => 'Gagal!, Harga harus diisi',
+            'harga_barang.numeric' => 'Gagal!, Harga harus berisikan angka',
+            'jenis_barang.required' => 'Gagal!, Jenis harus diisi',
+            'satuan.required' => 'Gagal!, Satuan barang harus diisi',
         ]);
 
         try {
@@ -57,6 +59,7 @@ class DataBarangController extends Controller
             $data_barang->nama_barang = $request->nama_barang;
             $data_barang->harga_barang = $request->harga_barang;
             $data_barang->jenis_barang = $request->jenis_barang;
+            $data_barang->satuan = $request->satuan;
             $data_barang->id_user = $user;
             $data_barang->save();
             Alert::success('Berhasil!', 'menambah data barang');
@@ -105,6 +108,7 @@ class DataBarangController extends Controller
             $data_barang->nama_barang = $request->nama_barang;
             $data_barang->harga_barang = $request->harga_barang;
             $data_barang->jenis_barang = $request->jenis_barang;
+            $data_barang->satuan = $request->satuan;
             $data_barang->id_user = $user;
             $data_barang->save();
             Alert::success('Berhasil!', 'merubah data barang');

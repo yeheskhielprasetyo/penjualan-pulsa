@@ -167,6 +167,7 @@ return [
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,6 +234,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

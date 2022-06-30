@@ -19,6 +19,11 @@ class DetailTransaksiAksesoris extends Model
         return $this->belongsTo(DataBarang::class, 'id_barang');
     }
 
+    public function detailtransaksi()
+    {
+        return $this->hasMany(DataTransaksi::class, 'id_detail_transaksi');
+    }
+
     public function transaksi_aksesoris()
     {
         return $this->hasMany(Transaksi::class, 'id');

@@ -43,15 +43,14 @@
         </div>
         <section class="section padding-top-70 padding-bottom-0" id="isipulsa">
             <h6 class="text-center">Lihat paling bawah untuk melihat total harga transaksi.</h6><br>
-            <h3 class="ml-5">Isi Pulsa</h3><br>
             @include('layouts.transaksi.index')
         </section>
-        <section class="section padding-top-70 padding-bottom-0" id="aksesoris">
-            <h3 class="ml-5">Beli Aksesoris</h3><br>
-            @include('layouts.transaksi.indexaksesoris')
-        </section>
         <div class="container padding-top-70">
-            <div class="alert alert-success" style="max-width: 50%">
+            <div class="alert" style="max-width: 50%">
+                <div class="form-group mb-0">
+                    {{-- <label for="tempat_lahir">Total Keseluruhan : Rp. {{$transaksitotal}} </label> --}}
+                </div>
+            </div>
         </div>
         </div>
         <section class="section">
